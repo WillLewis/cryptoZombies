@@ -1,4 +1,4 @@
-pragma solidity ^0.4.25;
+pragma solidity  >=0.5.0 <0.6.0;
 
 contract ZombieFactory {
 
@@ -14,10 +14,14 @@ contract ZombieFactory {
 
     function _createZombie(string memory _name, uint _dna) private {
         zombies.push(Zombie(_name, _dna));
-    }
-
+    } 
+    
+     //
     function _generateRandomDna(string memory _str) private view returns (uint) {
-        // start here
+        //keccak = https://bit.ly/3LRLDcA
+        //abi = https://www.quicknode.com/guides/solidity/what-is-an-abi
+        uint rand = uint(keccak256(abi.encodePacked(_str))); 
+        return rand % dnaModulus;
     }
 
-}
+
