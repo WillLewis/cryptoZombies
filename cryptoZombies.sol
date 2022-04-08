@@ -13,19 +13,24 @@ contract ZombieFactory {
 
     Zombie[] public zombies;
 
+    mapping(uint => address) public zombieToOwner; //tracks who owns a zombie
+    mapping(address => uint) ownerZombieCount; //tracks how many owned by user
+
     function _createZombie(string memory _name, uint _dna) private {
         uint id = zombies.push(Zombie(_name, _dna)) -1;
         //event fired here
         emit NewZombie(id, _name, _dna);
     } 
     
-     //
+     
     function _generateRandomDna(string memory _str) private view returns (uint) {
         //keccak = https://bit.ly/3LRLDcA
         //abi = https://www.quicknode.com/guides/solidity/what-is-an-abi
         uint rand = uint(keccak256(abi.encodePacked(_str))); 
         return rand % dnaModulus;
     }
+    
+    //takes a name and uses it to generate a random zombie
     function createRandomZombie(string memory _name) public {
         uint randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
