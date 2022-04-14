@@ -32,7 +32,7 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 
 	function feedOnKitty(uint _zombieId, uint _kittyId) public { //gets kitty genes from contract
 		uint kittyDna;
-		(,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId);
+		(,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId); //receiving tenth item in getKitty which returns 10 items
 		feedAndMultiply(_zombieId, kittyDna);
 	}
 	
