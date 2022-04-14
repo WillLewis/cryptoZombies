@@ -33,6 +33,7 @@ contract ZombieFactory {
     
     //takes a name and uses it to generate a random zombie
     function createRandomZombie(string memory _name) public {
+        require(ownerZombieCount[msg.sender] == 0); //only allow sender to create zombie once
         uint randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
     }
