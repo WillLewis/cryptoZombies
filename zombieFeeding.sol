@@ -28,7 +28,12 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 		_targetDna = _targetDna % dnaModulus; //to only take last 16 digits
 		uint newDna = (myZombie.dna + _targetDna) / 2;
 		_createZombie("NoName", newDna);
+	}
 
+	function feedOnKitty(uint _zombieId, uint _kittyId) public { //gets kitty genes from contract
+		uint kittyDna;
+		(,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId);
+		feedAndMultiply(_zombieId, kittyDna);
 	}
 	
 }
