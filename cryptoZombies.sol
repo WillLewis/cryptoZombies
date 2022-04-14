@@ -18,8 +18,8 @@ contract ZombieFactory {
 
     function _createZombie(string memory _name, uint _dna) private {
         uint id = zombies.push(Zombie(_name, _dna)) -1;
-        zombieToOwner[msg.sender] = id; //assign ownership of zombie to whoever calls function
-        ownerZombieCount[msg.sender] = uint++; //increment their owned zombie count
+        zombieToOwner[id] = msg.sender; //assign ownership of zombie to whoever calls function
+        ownerZombieCount[msg.sender]++; //increment their owned zombie count
         emit NewZombie(id, _name, _dna);//event fired here
     } 
     
