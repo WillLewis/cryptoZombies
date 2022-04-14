@@ -39,4 +39,8 @@ contract ZombieFactory {
     }
 }
 
+contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
+
+}
+
 
