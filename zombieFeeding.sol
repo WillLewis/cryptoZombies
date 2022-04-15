@@ -17,9 +17,11 @@ contract KittyInterface{
 }
 contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 
-	address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
-  	// Initialize kittyContract here using `ckAddress` from above
-  	KittyInterface kittyContract = KittyInterface(ckAddress); //now kittyContract is point to the cryptokitty contract
+  	KittyInterface kittyContract; 
+
+  	function setKittyContractAddress(address _address) external { //points to cryptoKitty address
+  		kittyContract = KittyInterface(_address);
+  	}
 
 
 	function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public {
