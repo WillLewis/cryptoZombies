@@ -15,6 +15,8 @@ contract KittyInterface{
 	    uint256 genes
 	);
 }
+
+
 contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 
   	KittyInterface kittyContract; 
