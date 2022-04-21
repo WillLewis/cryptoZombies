@@ -21,7 +21,7 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 
   	KittyInterface kittyContract; 
 
-  	function setKittyContractAddress(address _address) external { //points to cryptoKitty address
+  	function setKittyContractAddress(address _address) external onlyOwner { //points to cryptoKitty address
   		kittyContract = KittyInterface(_address);
   	}
 
