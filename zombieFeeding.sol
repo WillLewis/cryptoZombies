@@ -21,8 +21,18 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 
   	KittyInterface kittyContract; 
 
+  	//uses onlyOwner modifier from ownable.sol to prevent others from changing the contract
   	function setKittyContractAddress(address _address) external onlyOwner { //points to cryptoKitty address
   		kittyContract = KittyInterface(_address);
+  	}
+
+  	function _triggerCooldown(Zombie storage _zombie) internal {
+  		_zombie.readyTime = uint32(now + cooldownTime);
+  	}
+
+  	//tells us whether enough time has passed since last time zombie fed
+  	function _isReady(Zombie storage _zombie) internal view returns (bool) {
+  		return (_zombie.readyTime <= now);  
   	}
 
 
