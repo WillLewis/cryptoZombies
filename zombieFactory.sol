@@ -7,6 +7,7 @@ contract ZombieFactory is Ownable {
 
     uint dnaDigits = 16;
     uint dnaModulus = 10 ** dnaDigits;
+    uint cooldownTime = 1 days; //an amount of time a zombie has to wait after feeding or attacking before it's allowed to attack again
 
     struct Zombie {
         string name;
@@ -21,7 +22,7 @@ contract ZombieFactory is Ownable {
     mapping(address => uint) ownerZombieCount; //tracks how many owned by user
 
     function _createZombie(string memory _name, uint _dna) internal {
-        uint id = zombies.push(Zombie(_name, _dna)) -1;
+        uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime))) -1;
         zombieToOwner[id] = msg.sender; //assign ownership of zombie to whoever calls function
         ownerZombieCount[msg.sender]++; //increment their owned zombie count
         emit NewZombie(id, _name, _dna);//event fired here
