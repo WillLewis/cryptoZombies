@@ -36,9 +36,10 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
   	}
 
 
-	function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public {
+	function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal {
 		require(msg.sender == zombieToOwner[_zombieId]); //make sure owner owns this zombie
 		Zombie storage myZombie = zombies[_zombieId]; //create a pointer to index of owners zombie
+		require(_isReady(myZombie)); //can only execute this function if cooldown time is over
 		_targetDna = _targetDna % dnaModulus; //to only take last 16 digits
 		uint newDna = (myZombie.dna + _targetDna) / 2; //calculate new zombies DNA
 		if(keccak256(abi.encodePacked(_species)) == keccak256(abi.encodePacked("kitty"))) {
@@ -47,6 +48,7 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 			//Assume newDna is 334455. Then newDna % 100 is 55, so newDna - newDna % 100 is 334400. Finally add 99 to get 334499
 		}
 		_createZombie("NoName", newDna);
+		_triggerCooldown(myZombie);
 	}
 
 	function feedOnKitty(uint _zombieId, uint _kittyId) public { //gets kitty genes from contract
