@@ -7,7 +7,16 @@ import "./zombiehelper.sol";
  * The ZombieAttack is ZombieHelper contract does this and that...
  */
 contract ZombieAttack is ZombieHelper {
-    
+  uint randNonce = 0;
+
+/**
+ * take the timestamp of now, the msg.sender, and an incrementing nonce (a number that is only ever used once, 
+ * so we don't run the same hash function with the same input parameters twice 
+ **/
+  function randMod(uint _modulus) internal returns (uint) {
+  	randNonce++;	
+  	return uint(keccak256(abi.encodePacked(now, msg.sender, randNonce))) % _modulus;
+  } 
   
 }
 
