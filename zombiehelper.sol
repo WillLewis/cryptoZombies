@@ -10,6 +10,15 @@ contract ZombieHelper is ZombieFeeding {
     require(zombies[_zombieId].level >= _level); //restrict special abilities to certain levels
     _;
   }
+
+  function withdraw() external onlyOwner{
+    address payable _owner = address(uint160(owner())); //owner needs to be typecasted from uint160 to payable
+    _owner.transfer(address(this).balance); //transfers the contract balance to owner
+  }
+
+  function setLevelUpFee(uint _fee) external onlyOwner{
+    levelUpFee = _fee;
+  }
   
   function levelUp(uint _zombieId) external payable {
     require(msg.value == levelUpFee);
