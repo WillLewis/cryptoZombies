@@ -8,6 +8,7 @@ import "./zombiehelper.sol";
  */
 contract ZombieAttack is ZombieHelper {
   uint randNonce = 0;
+  uint attackVictoryProbability = 70;
 
 /**
  * take the timestamp of now, the msg.sender, and an incrementing nonce (a number that is only ever used once, 
@@ -17,6 +18,10 @@ contract ZombieAttack is ZombieHelper {
   	randNonce++;	
   	return uint(keccak256(abi.encodePacked(now, msg.sender, randNonce))) % _modulus;
   } 
+
+  function attack(uint _zombieId, uint _targetId) external {
+  	
+  }
   
 }
 
