@@ -19,7 +19,13 @@ contract KittyInterface{
 
 contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 
-  	KittyInterface kittyContract; 
+  	KittyInterface kittyContract;
+
+  	modifier ownerOf(uint _zombieId) { 
+  	 	require(msg.sender == zombieToOwner[_zombieId]); 
+  	 	_; 
+  	 }
+  	  
 
   	//uses onlyOwner modifier from ownable.sol to prevent others from changing the contract
   	function setKittyContractAddress(address _address) external onlyOwner { //points to cryptoKitty address
@@ -36,8 +42,7 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
   	}
 
 
-	function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal {
-		require(msg.sender == zombieToOwner[_zombieId]); //make sure owner owns this zombie
+	function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal ownerOf(_zombieId){
 		Zombie storage myZombie = zombies[_zombieId]; //create a pointer to index of owners zombie
 		require(_isReady(myZombie)); //can only execute this function if cooldown time is over
 		_targetDna = _targetDna % dnaModulus; //to only take last 16 digits
