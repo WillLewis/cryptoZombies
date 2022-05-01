@@ -11,12 +11,12 @@ contract ZombieHelper is ZombieFeeding {
     _;
   }
 
-  function withdraw() external onlyOwner{
+  function withdraw() external onlyOwnerOf{
     address payable _owner = address(uint160(owner())); //owner needs to be typecasted from uint160 to payable
     _owner.transfer(address(this).balance); //transfers the contract balance to owner
   }
 
-  function setLevelUpFee(uint _fee) external onlyOwner{
+  function setLevelUpFee(uint _fee) external onlyOwnerOf{
     levelUpFee = _fee;
   }
   
@@ -25,11 +25,11 @@ contract ZombieHelper is ZombieFeeding {
     zombies[_zombieId].level++;
   }
 
-  function changeName(uint _zombieId, string calldata _newName) external aboveLevel(2, _zombieId) ownerOf(_zombieId){
+  function changeName(uint _zombieId, string calldata _newName) external aboveLevel(2, _zombieId) onlyOwnerOf(_zombieId){
     zombies[_zombieId].name = _newName;
   }
 
-  function changeDna(uint _zombieId, uint _newDna) external aboveLevel(20, _zombieId) ownerOf(_zombieId){
+  function changeDna(uint _zombieId, uint _newDna) external aboveLevel(20, _zombieId) onlyOwnerOf(_zombieId){
     zombies[_zombieId].dna = _newDna;
   }
 

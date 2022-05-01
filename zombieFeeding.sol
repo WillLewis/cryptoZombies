@@ -21,7 +21,7 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
 
   	KittyInterface kittyContract;
 
-  	modifier ownerOf(uint _zombieId) { 
+  	modifier onlyOwnerOf(uint _zombieId) { 
   	 	require(msg.sender == zombieToOwner[_zombieId]); 
   	 	_; 
   	 }
@@ -42,7 +42,7 @@ contract ZombieFeeding is ZombieFactory { //demonstrating inheritance
   	}
 
 
-	function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal ownerOf(_zombieId){
+	function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal onlyOwnerOf(_zombieId){
 		Zombie storage myZombie = zombies[_zombieId]; //create a pointer to index of owners zombie
 		require(_isReady(myZombie)); //can only execute this function if cooldown time is over
 		_targetDna = _targetDna % dnaModulus; //to only take last 16 digits
