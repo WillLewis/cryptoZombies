@@ -8,7 +8,11 @@ import "./erc721.sol";
  * The ZombieOwnership is ZombieAttack contract does this and that...
  */
 contract ZombieOwnership is ZombieAttack, ERC721 {
-	function balanceOf(address _owner) external view returns (uint256) {
+  
+  mapping (uint => address) zombieApprovals;
+  
+
+  function balanceOf(address _owner) external view returns (uint256) {
     // 1. Return the number of zombies `_owner` has here
     return ownerZombieCount[_owner];
   }
@@ -28,7 +32,8 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
   }
 
   function transferFrom(address _from, address _to, uint256 _tokenId) external payable {
-
+  	require (zombieToOwner[_tokenId] == msg.sender || zombieApprovals[_tokenId] == msg.sender);
+  	_transfer(_from, _to, _tokenId);
   }
 
   function approve(address _approved, uint256 _tokenId) external payable {
