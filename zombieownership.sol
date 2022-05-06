@@ -4,9 +4,9 @@ import "./zombieattack.sol";
 import "./erc721.sol";
 import "./safemath.sol";
 
-/**
- * The ZombieOwnership is ZombieAttack contract does this and that...
- */
+/// @title A contract for managing zombie ownership and access
+/// @author WXL
+/// @notice the contract is roughly identical to Looms cryptozombies with exception of my comments
 contract ZombieOwnership is ZombieAttack, ERC721 {
   
   using SafeMath for uint256;
